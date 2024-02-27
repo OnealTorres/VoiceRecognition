@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./style.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <title>Speech To Text</title>
+  </head>
+  <body>
+    <!-- Button trigger modal -->
+    <button
+      style="display: none"
+      type="button"
+      id="message"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Launch
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Message</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div id="modal-body" class="modal-body">
+            ✉ Email sent successfully!
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display: grid; justify-content: center">
+      <div id="str"></div>
+    </div>
+    <img
+      id="animated"
+      src="./bopping.gif"
+      style="
+        width: 30%;
+        object-fit: contain;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+      "
+      alt=""
+    />
+    <script>
+      var SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition ||
+        window.mozSpeechRecognition ||
+        window.msSpeechRecognition;
+      var voiceRecognition = new SpeechRecognition();
+
+      // Set language to English (United States)
+      voiceRecognition.lang = "en-US";
+
+      // Disable interim results
+      voiceRecognition.interimResults = false;
+
+      // Set the maximum number of alternative transcripts to 5
+      voiceRecognition.maxAlternatives = 5;
+
+      voiceRecognition.onresult = function (event) {
+        var recordedVoice = event.results[0][0].transcript;
+
+        var string = recordedVoice;
+        var str = string.split("");
+        var el = document.getElementById("str");
+        (function animate() {
+          str.length > 0
+            ? (el.innerHTML += str.shift())
+            : clearTimeout(running);
+          var running = setTimeout(animate, 90);
+        })();
+
+        document.getElementById("animated").src = "./explanation.gif";
+        // Send email with recorded voice message
+        sendEmail(recordedVoice);
+
+        // Function to send email
+        function sendEmail(message) {
+          // Replace these values with your own
+          var serviceID = "service_2c0f3cj";
+          var templateID = "template_l6cbh1m";
+          var userID = "7ZnP8XVakorqeHNIy";
+
+          // Prepare email parameters
+          var templateParams = {
+            to_email: "torresonealryan@gmail.com",
+            message: message,
+          };
+
+          // Send the email
+          emailjs.send(serviceID, templateID, templateParams, userID).then(
+            function (response) {
+              console.log("Email sent successfully", response);
+              document.getElementById("message").click();
+            },
+            function (error) {
+              console.error("Email sending failed", error);
+            }
+          );
+        }
+      };
+
+      // Start voice recognition when the page loads
+      voiceRecognition.start();
+    </script>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      // Initialize EmailJS with your user ID
+      emailjs.init("7ZnP8XVakorqeHNIy");
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
