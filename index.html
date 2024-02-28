@@ -12,22 +12,42 @@
     />
     <title>Speech To Text</title>
   </head>
-  <body>
-    <div style="display: grid; justify-content: center">
-      <div id="str"></div>
+  <body style="background: url(./koreanbg.jpg); background-size: cover; backdrop-filter: blur(10px); width: 100vw; height: 100vh; background-repeat: no repeat; ">
+    <div id="carouselExample" style="width: 40%; margin-left:auto; margin-right: auto; height: 400px; padding-top: 70px;" class="carousel slide">
+      <div class="carousel-inner">
+        
+        <div class="carousel-item">
+          <img src="./Mike-OHearn-3-1.webp" style="object-fit: contain; height: 400px;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./JamesReid.jpg" style="object-fit: contain; height: 400px;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./chris-hemsworth-shirtless-japan-snow-012524-tout-2957aac632ac4aeabc129bce73081318.jpg" style="object-fit: contain; height: 400px;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./original_jaicke-chain_4813234316826.jpg" style="object-fit: contain; height: 400px;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./dingdong.jpg" style="object-fit: contain; height: 400px;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item active">
+          <img src="./muscle man.jpg" style="object-fit: contain; height: 400px;"class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" style=" -webkit-filter: invert(100%); filter: invert(100%);" aria-hidden="true"></span>
+        <span class="visually-hidden" >Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" style=" -webkit-filter: invert(100%); filter: invert(100%);" aria-hidden="true"></span>
+        <span class="visually-hidden" >Next</span>
+      </button>
     </div>
-    <img
-      id="animated"
-      src="./bopping.gif"
-      style="
-        width: 30%;
-        object-fit: contain;
-        position: fixed;
-        bottom: 0;
-        right: 0;
-      "
-      alt=""
-    />
+    <div style="display: grid; justify-content: center">
+      <div id="str" style="color:white"></div>
+    </div>
+
     <script>
       var SpeechRecognition =
         window.SpeechRecognition ||
@@ -58,7 +78,7 @@
           var running = setTimeout(animate, 90);
         })();
 
-        document.getElementById("animated").src = "./explanation.gif";
+        
         // Send email with recorded voice message
         sendEmail(recordedVoice);
 
